@@ -79,6 +79,8 @@ du -sh $WORKDIR/*
 #echo "* Removing indexes."
 #rm -rf $WORKDIR/indexes/
 
+# If files others than the .fld one are required, please comment
+# the following lines.
 echo "* Removing useless exports."
 rm -f $WORKDIR/export/*.inf
 rm -f $WORKDIR/export/*.len
@@ -91,6 +93,10 @@ ls -lh $WORKDIR/
 
 echo "Size after cleaning:"
 du -sh $WORKDIR/*
+
+echo "Make files modifiable by the end-user."
+chmod -R 777 $WORKDIR/export/
+chmod -R 777 $WORKDIR/indexes/
 
 localtime=$(date +"%Y-%m-%d %H:%M:%S")
 echo "Docker Script execution finished on $localtime."
