@@ -30,7 +30,7 @@ $ java --illegal-access=permit -jar $INDEXER_JAR \
 This generates a set of binary lucene files as shown below:
 
 ````
-boris@castalia:maven$ ls -lh $WORKDIR/indexes/
+$ ls -lh $WORKDIR/indexes/
 total 5,2G
 -rw-r--r-- 1 root root 500M juil.  7 22:06 _4m.fdt
 -rw-r--r-- 1 root root 339K juil.  7 22:06 _4m.fdx
@@ -99,7 +99,7 @@ When executed on the maven central indexes (5.2 GB), the process generates
 49GB of text data on disk:
 
 ```
-boris@castalia:maven$ du -sh /work/*
+$ du -sh /work/*
 49G	/work/export
 5,2G	/work/indexes
 1,2G	/work/nexus-maven-repository-index.gz
@@ -116,7 +116,7 @@ $ docker run -v $(pwd)/repository_test:/work bbaldassari/maven-index-exporter
 The exported files will be stored in `repository_test/export/`, and output should look like this:
 
 ````
-boris@castalia:gh_maven-index-exporter$ docker run -v $(pwd)/repository_test:/work bbaldassari/maven-index-exporter
+$ docker run -v $(pwd)/repository_test:/work bbaldassari/maven-index-exporter
 Docker Script started on 2021-08-19 09:07:53.
 # Checks..
 * Content of /opt:
@@ -207,13 +207,12 @@ Size after cleaning:
 4.0K	/work/nexus-maven-repository-index.properties.sha1
 Make files modifiable by the end-user:
 Docker Script execution finished on 2021-08-19 09:07:54.
-boris@castalia:gh_maven-index-exporter$
 ````
 
 The _1.fld file contains the fields for each document:
 
 ````
-boris@castalia:gh_maven-index-exporter$ head repository_test/export/_1.fld
+$ head repository_test/export/_1.fld
 doc 0
   field 0
     name u
