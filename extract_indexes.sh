@@ -82,19 +82,17 @@ du -sh $WORKDIR/*
 # If files others than the .fld one are required, please comment
 # the following lines.
 echo "* Removing useless exports."
+echo "  Keeping only fld text extract."
 rm -f $WORKDIR/export/*.inf
 rm -f $WORKDIR/export/*.len
 rm -f $WORKDIR/export/*.pst
 rm -f $WORKDIR/export/*.si
 rm -f $WORKDIR/export/segments*
 
-echo "Keeping only fld text extract:"
-ls -lh $WORKDIR/
-
-echo "Size after cleaning:"
+echo "  Size after cleaning:"
 du -sh $WORKDIR/*
 
-echo "Make files modifiable by the end-user."
+echo "* Make files modifiable by the end-user."
 chmod -R 777 $WORKDIR/export/
 chmod -R 777 $WORKDIR/indexes/
 
