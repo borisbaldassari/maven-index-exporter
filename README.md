@@ -228,9 +228,42 @@ doc 0
 ### Building the test repository
 
 The test repository `repository_test` can be rebuilt from the repository_src
-structure with the following maven-indexer commands:
+structure using [indexer-cli](https://search.maven.org/remotecontent?filepath=org/apache/maven/indexer/indexer-cli/6.0.0/indexer-cli-6.0.0.jar)
+with the following commands:
 
 ````
-$ java -jar ~/Downloads/indexer-cli-6.0.0.jar -i index/ -d target/ -r repo1 -s -t full -c
-$ java -jar ~/Downloads/indexer-cli-6.0.0.jar -i index/ -d target/ -r repo2 -s -t full -c
+$ cd repository_src
+$ java -jar ~/Downloads/indexer-cli-6.0.0.jar -i index/ -d repository_test/ -r repo1 -s -c
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+Repository Folder: /home/boris/Projects/maven-index-exporter/repository_src/repo1
+Index Folder:      /home/boris/Projects/maven-index-exporter/repository_src/index
+Output Folder:     /home/boris/Projects/maven-index-exporter/repository_src/repository_test
+Repository name:   index
+Indexers: [min, jarContent]
+Will create checksum files for all published files (sha1, md5).
+Will create incremental chunks for changes, along with baseline file.
+Scanning started
+Artifacts added:   2
+Artifacts deleted: 0
+Total time:   1 sec
+Final memory: 48M/1012M
+$ java -jar ~/Downloads/indexer-cli-6.0.0.jar -i index/ -d repository_test/ -r repo2 -s -c
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+Repository Folder: /home/boris/Projects/maven-index-exporter/repository_src/repo2
+Index Folder:      /home/boris/Projects/maven-index-exporter/repository_src/index
+Output Folder:     /home/boris/Projects/maven-index-exporter/repository_src/repository_test
+Repository name:   index
+Indexers: [min, jarContent]
+Will create checksum files for all published files (sha1, md5).
+Will create incremental chunks for changes, along with baseline file.
+Scanning started
+Artifacts added:   2
+Artifacts deleted: 0
+Total time:   0 sec
+Final memory: 7M/1012M
+$
 ````
