@@ -24,7 +24,7 @@ if len(sys.argv) != 4:
     print("  - work_dir must be an absolute path to the temp directory.")
     print("      Example: /tmp/maven-index-exporter/")
     print("  - publish_dir must be an absolute path to the final directory.")
-    print("      Example: /var/www/html/maven_index_exporter/")
+    print("      Example: /var/www/html/")
     exit()
     
 base_url = sys.argv[1]
@@ -155,9 +155,10 @@ else:
     print("Cannot find .fld file. Exiting")
     exit(4)
 
-print(f"Copying files to {publish_dir}..")
+publish_file = join(publish_dir, "export.fld")
+print(f"Copying files to {publish_file}..")
 try:
-    copy2(myfile, publish_dir)
+    copy2(myfile, publish_file)
 except OSError as error:
         print(f"Could not publish results in {publish_dir}: {error}.")
 
