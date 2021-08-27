@@ -51,12 +51,14 @@ $ java --illegal-access=permit -jar $JAR_CLUE $WORKDIR/indexes/ \
        export $WORKDIR/export/ text
 ````
 
-The resulting text export will be available in `$WORKDIR/export/`.
+This generates a bunch of text files relating to the Lucene indexes, made
+available in `$WORKDIR/export/`. For our purpose we only keep the `*.fld`
+file that includes the indexed documents. 
 
 ## Output
 
 The clue command is documented on [its github page](https://github.com/javasoze/clue).
-Documents especially are located in the `*.fld` file.
+The indexed Lucene documents are located in the `*.fld` file.
 
 A description of the fields used by maven-indexer can be found in the project's
 API docs:
@@ -70,7 +72,8 @@ The build downloads binaries for both tools (maven-indexer-cli and clue).
 $ docker build . -t bbaldassari/maven-index-exporter --no-cache
 ```
 
-A built and tested image is also available on docker hub at [bbaldassari/maven-index-exporter](https://hub.docker.com/r/bbaldassari/maven-index-exporter).
+An up-to-date docker image is also available on docker hub at
+[bbaldassari/maven-index-exporter](https://hub.docker.com/r/bbaldassari/maven-index-exporter).
 
 ````
 $ docker pull bbaldassari/maven-index-exporter
@@ -92,7 +95,41 @@ For our purpose only the fld file is kept, so if you need other export files
 you should simply edit the `extract_indexes.sh` script and comment the lines
 that do the cleaning.
 
-### Size of generated files
+### Running as cron
+
+The `run_full_export.py` script located in `resources` provides an easy way to run the
+export as a cron batch job, and copy the resulting text export to a specific location.
+
+Simply use and adapt the crontab command as follows:
+
+```
+cd /home/boris/resources/ && /home/boris/resources/myvenv/bin/python /home/boris/resources/run_full_export.py https://maven.xwiki.org/releases/ /tmp/maven-index\
+-exporter/ /var/www/html/maven_index_exporter/ 2>&1 > /home/boris/run_maven_exporter_$(date +"%Y%m%d-%H%M%S").log
+
+```
+
+The script takes three mandatory arguments:
+
+```
+Usage: run_full_export.py url work_dir publish_dir
+  - url is the base url of the maven repository instance.
+      Example: https://repo.maven.apache.org/maven2/
+  - work_dir must be an absolute path to the temp directory.
+      Example: /tmp/maven-index-exporter/
+  - publish_dir must be an absolute path to the final directory.
+      Example: /var/www/html/
+```
+
+It is recommended to setup a virtual environment to run the script.
+
+```
+$ python3 -m venv myvenv
+$ source venv/bin/activate
+```
+
+Python modules to be installed are provided in the `requirements.txt` file.
+
+### size of generated files
 
 Beware that maven indexes are compressed and text export can become huge.
 When executed on the maven central indexes (5.2 GB), the process generates
@@ -117,25 +154,25 @@ The exported files will be stored in `repository_test/export/`, and output shoul
 
 ````
 $ docker run -v $(pwd)/repository_test:/work bbaldassari/maven-index-exporter
-Docker Script started on 2021-08-19 09:07:53.
+Docker Script started on 2021-08-27 06:32:22.
 # Checks..
 * Content of /opt:
 total 32156
 -rw-------    1 root     root      18000742 Jan  8  2018 clue-6.2.0-1.0.0.jar
--rw-r--r--    1 root     root          2586 Aug 19 08:59 extract_indexes.sh
+-rw-r--r--    1 root     root          2574 Aug 25 18:28 extract_indexes.sh
 -rw-------    1 root     root      14914610 Nov 28  2017 indexer-cli-6.0.0.jar
 drwxr-xr-x    3 root     root          4096 Jun 29 16:23 java
 * Content of /work:
 total 36
--rw-r--r--    1 1000     1000           254 Jul 12 17:43 nexus-maven-repository-index.1.gz
--rw-r--r--    1 1000     1000            32 Jul 12 17:43 nexus-maven-repository-index.1.gz.md5
--rw-r--r--    1 1000     1000            40 Jul 12 17:43 nexus-maven-repository-index.1.gz.sha1
--rw-r--r--    1 1000     1000           344 Jul 12 17:43 nexus-maven-repository-index.gz
--rw-r--r--    1 1000     1000            32 Jul 12 17:43 nexus-maven-repository-index.gz.md5
--rw-r--r--    1 1000     1000            40 Jul 12 17:43 nexus-maven-repository-index.gz.sha1
--rw-r--r--    1 1000     1000           193 Jul 12 17:43 nexus-maven-repository-index.properties
--rw-r--r--    1 1000     1000            32 Jul 12 17:43 nexus-maven-repository-index.properties.md5
--rw-r--r--    1 1000     1000            40 Jul 12 17:43 nexus-maven-repository-index.properties.sha1
+-rw-r--r--    1 1000     1000           254 Aug 26 09:21 nexus-maven-repository-index.1.gz
+-rw-r--r--    1 1000     1000            32 Aug 26 09:21 nexus-maven-repository-index.1.gz.md5
+-rw-r--r--    1 1000     1000            40 Aug 26 09:21 nexus-maven-repository-index.1.gz.sha1
+-rw-r--r--    1 1000     1000           344 Aug 26 09:21 nexus-maven-repository-index.gz
+-rw-r--r--    1 1000     1000            32 Aug 26 09:21 nexus-maven-repository-index.gz.md5
+-rw-r--r--    1 1000     1000            40 Aug 26 09:21 nexus-maven-repository-index.gz.sha1
+-rw-r--r--    1 1000     1000           193 Aug 26 09:21 nexus-maven-repository-index.properties
+-rw-r--r--    1 1000     1000            32 Aug 26 09:21 nexus-maven-repository-index.properties.md5
+-rw-r--r--    1 1000     1000            40 Aug 26 09:21 nexus-maven-repository-index.properties.sha1
 * Will read files from [/work/nexus-maven-repository-index.gz].
 *   Found file [/work/nexus-maven-repository-index.gz].
 *   Found indexer [/opt/indexer-cli-6.0.0.jar].
@@ -152,8 +189,8 @@ SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further detail
 Index Folder:      /work
 Output Folder:     /work/indexes
 Total time:   0 sec
-Final memory: 39M/1004M
-Unpacking finished on 2021-08-19 09:07:54.
+Final memory: 41M/1004M
+Unpacking finished on 2021-08-27 06:32:23.
 #############################
 Exporting indexes /work/indexes to /work/export
 no configuration found, using default configuration
@@ -164,7 +201,7 @@ IndexReader Factory: 	class com.senseidb.clue.api.DefaultIndexReaderFactory
 Term Bytesref Display: 	class com.senseidb.clue.api.StringBytesRefDisplay
 Payload Bytesref Display: 	class com.senseidb.clue.api.RawBytesRefDisplay
 exporting index to text
-Exporting finished on 2021-08-19 09:07:54.
+Exporting finished on 2021-08-27 06:32:23.
 #############################
 Cleaning useless files.
 Size before cleaning:
@@ -180,20 +217,8 @@ Size before cleaning:
 4.0K	/work/nexus-maven-repository-index.properties.md5
 4.0K	/work/nexus-maven-repository-index.properties.sha1
 * Removing useless exports.
-Keeping only fld text extract:
-total 44K    
-drwxr-xr-x    2 root     root        4.0K Aug 19 09:07 export
-drwxr-xr-x    2 root     root        4.0K Aug 19 09:07 indexes
--rw-r--r--    1 1000     1000         254 Jul 12 17:43 nexus-maven-repository-index.1.gz
--rw-r--r--    1 1000     1000          32 Jul 12 17:43 nexus-maven-repository-index.1.gz.md5
--rw-r--r--    1 1000     1000          40 Jul 12 17:43 nexus-maven-repository-index.1.gz.sha1
--rw-r--r--    1 1000     1000         344 Jul 12 17:43 nexus-maven-repository-index.gz
--rw-r--r--    1 1000     1000          32 Jul 12 17:43 nexus-maven-repository-index.gz.md5
--rw-r--r--    1 1000     1000          40 Jul 12 17:43 nexus-maven-repository-index.gz.sha1
--rw-r--r--    1 1000     1000         193 Jul 12 17:43 nexus-maven-repository-index.properties
--rw-r--r--    1 1000     1000          32 Jul 12 17:43 nexus-maven-repository-index.properties.md5
--rw-r--r--    1 1000     1000          40 Jul 12 17:43 nexus-maven-repository-index.properties.sha1
-Size after cleaning:
+  Keeping only fld text extract.
+  Size after cleaning:
 8.0K	/work/export
 28.0K	/work/indexes
 4.0K	/work/nexus-maven-repository-index.1.gz
@@ -205,8 +230,8 @@ Size after cleaning:
 4.0K	/work/nexus-maven-repository-index.properties
 4.0K	/work/nexus-maven-repository-index.properties.md5
 4.0K	/work/nexus-maven-repository-index.properties.sha1
-Make files modifiable by the end-user:
-Docker Script execution finished on 2021-08-19 09:07:54.
+* Make files modifiable by the end-user.
+Docker Script execution finished on 2021-08-27 06:32:23.
 ````
 
 The _1.fld file contains the fields for each document:
