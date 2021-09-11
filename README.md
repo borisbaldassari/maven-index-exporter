@@ -64,7 +64,8 @@ https://maven.apache.org/maven-indexer-archives/maven-indexer-6.0.0/indexer-core
 
 ## How to build
 
-The build downloads binaries for both tools (maven-indexer-cli and clue).
+The build downloads binaries for both tools (maven-indexer-cli and clue), so make sure there is an internet connection.
+Go to the `docker/` dorectory and issue the folowing command:
 
 ```
 $ docker build . -t bbaldassari/maven-index-exporter --no-cache
@@ -95,8 +96,8 @@ that do the cleaning.
 ### Size of generated files
 
 Beware that maven indexes are compressed and text export can become huge.
-When executed on the maven central indexes (5.2 GB), the process generates
-49GB of text data on disk:
+When executed on the maven central indexes (1.2 GB), the process generates
+5.2 GB of intermediate files and 49 GB of final text data on disk:
 
 ```
 $ du -sh /work/*
@@ -105,7 +106,31 @@ $ du -sh /work/*
 1,2G	/work/nexus-maven-repository-index.gz
 ```
 
-## How to test
+## How to test (the quick way)
+
+There is a bash script called `test_docker_image.sh` in the `resources/` directory,
+simply execute it. Tests cover the creation of the docker image, and the results after
+execution.
+
+````
+$ bash test_docker_image.sh
+Script started on 20210911_181912.
+* Writing log to test_docker_image.log.
+* Docker image [maven-index-exporter] doesn't exist.
+* Building docker image.
+PASS: docker build returned 0.
+PASS: Docker image is listed.
+PASS: file [/home/boris/Projects/gh_maven-index-exporter/repository_test/export/_1.fld] has been created.
+PASS: file [/home/boris/Projects/gh_maven-index-exporter/repository_test/export/_1.fld] has 7 docs.
+PASS: file [/home/boris/Projects/gh_maven-index-exporter/repository_test/export/_1.fld] has 26 fields.
+PASS: file [/home/boris/Projects/gh_maven-index-exporter/repository_test/export/_1.fld] has sprova4j-0.1.0-sources.jar.
+PASS: file [/home/boris/Projects/gh_maven-index-exporter/repository_test/export/_1.fld] has sprova4j-0.1.0.pom.
+PASS: file [/home/boris/Projects/gh_maven-index-exporter/repository_test/export/_1.fld] has sprova4j-0.1.1-sources.jar.
+PASS: file [/home/boris/Projects/gh_maven-index-exporter/repository_test/export/_1.fld] has sprova4j-0.1.1.pom.
+$
+````
+
+## How to test (the long road)
 
 This repository has a simple, almost-empty maven-indexer index that can be used to test the docker build. To use it, make sure that the directory `repository_test/` is present and run this command:
 
