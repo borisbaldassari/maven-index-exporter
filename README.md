@@ -53,7 +53,7 @@ $ java --illegal-access=permit -jar $JAR_CLUE $WORKDIR/indexes/ \
 
 This generates a bunch of text files relating to the Lucene indexes, made
 available in `$WORKDIR/export/`. For our purpose we only keep the `*.fld`
-file that includes the indexed documents. 
+file that includes the indexed documents.
 
 ## Output
 
@@ -259,7 +259,7 @@ Size before cleaning:
 Docker Script execution finished on 2021-08-27 06:32:23.
 ````
 
-The _1.fld file contains the fields for each document:
+The `_1.fld` file contains the fields for each document:
 
 ````
 $ head repository_test/export/_1.fld
@@ -277,7 +277,7 @@ doc 0
 
 ### Building the test repository
 
-The test repository `repository_test` can be rebuilt from the repository_src
+The test repository `repository_test` can be rebuilt from the `repository_src`
 structure using [indexer-cli](https://search.maven.org/remotecontent?filepath=org/apache/maven/indexer/indexer-cli/6.0.0/indexer-cli-6.0.0.jar)
 with the following commands:
 
