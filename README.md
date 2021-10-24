@@ -104,7 +104,7 @@ export as a cron batch job, and copy the resulting text export to a specific loc
 Simply use and adapt the crontab command as follows:
 
 ```
-cd /home/boris/resources/ && /home/boris/resources/myvenv/bin/python /home/boris/resources/run_full_export.py https://maven.xwiki.org/releases/ /tmp/maven-index\
+cd /home/boris/resources/ && /home/boris/resources/myvenv/bin/python /home/boris/resources/run_full_export.py https://repo.maven.apache.org/maven2/ /tmp/maven-index\
 -exporter/ /var/www/html/maven_index_exporter/ 2>&1 > /home/boris/run_maven_exporter_$(date +"%Y%m%d-%H%M%S").log
 
 ```
