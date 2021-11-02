@@ -69,18 +69,18 @@ else
 fi
 
 DOCS=$(grep -E "^doc" $EXPORT_FILE | wc -l)
-if [[ $DOCS -eq 7 ]]; then 
-    echo "PASS: file [$EXPORT_FILE] has 7 docs."
+if [[ $DOCS -eq 10 ]]; then 
+    echo "PASS: file [$EXPORT_FILE] has 10 docs."
 else 
-    echo "FAIL: file [$EXPORT_FILE] has $DOCS docs, should be 7."
+    echo "FAIL: file [$EXPORT_FILE] has $DOCS docs, should be 10."
     exit 20
 fi
 
 FIELDS=$(grep -E "^  field" $EXPORT_FILE | wc -l)
-if [[ $FIELDS -eq 26 ]]; then 
-    echo "PASS: file [$EXPORT_FILE] has 26 fields."
+if [[ $FIELDS -eq 35 ]]; then 
+    echo "PASS: file [$EXPORT_FILE] has 35 fields."
 else 
-    echo "FAIL: file [$EXPORT_FILE] has $FIELDS fields, should be 26."
+    echo "FAIL: file [$EXPORT_FILE] has $FIELDS fields, should be 35."
     exit 20
 fi
 
