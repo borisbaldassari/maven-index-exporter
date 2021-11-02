@@ -20,16 +20,16 @@ The export is then achieved in two steps:
 * Unpack the Lucene indexes from the Maven Indexer indexes using
   `maven-indexer-cli`. The command used is:
 
-````
+```
 $ java --illegal-access=permit -jar $INDEXER_JAR \
        --unpack $FILE_IN \
        --destination $WORKDIR/indexes/ \
        --type full
-````
+```
 
 This generates a set of binary lucene files as shown below:
 
-````
+```
 $ ls -lh $WORKDIR/indexes/
 total 5,2G
 -rw-r--r-- 1 root root 500M juil.  7 22:06 _4m.fdt
@@ -41,15 +41,15 @@ total 5,2G
 -rw-r--r-- 1 root root  363 juil.  7 22:06 _e0.si
 -rw-r--r-- 1 root root 1,7K juil.  7 22:07 segments_2
 -rw-r--r-- 1 root root    8 juil.  7 21:54 timestamp
-````
+```
 
 * Export the Lucene documents from the Lucene indexes using `clue`. This
   generates a set of text files as shown below:
 
-````
+```
 $ java --illegal-access=permit -jar $JAR_CLUE $WORKDIR/indexes/ \
        export $WORKDIR/export/ text
-````
+```
 
 This generates a bunch of text files relating to the Lucene indexes, made
 available in `$WORKDIR/export/`. For our purpose we only keep the `*.fld`
@@ -76,9 +76,9 @@ $ docker build . -t bbaldassari/maven-index-exporter --no-cache
 An up-to-date docker image is also available on docker hub at
 [bbaldassari/maven-index-exporter](https://hub.docker.com/r/bbaldassari/maven-index-exporter).
 
-````
+```
 $ docker pull bbaldassari/maven-index-exporter
-````
+```
 
 ## How to use
 
@@ -149,7 +149,7 @@ There is a bash script called `test_docker_image.sh` in the `resources/` directo
 simply execute it. Tests cover the creation of the docker image, and the results after
 execution.
 
-````
+```
 $ bash test_docker_image.sh
 Script started on 20210911_181912.
 * Writing log to test_docker_image.log.
@@ -165,19 +165,19 @@ PASS: file [/home/boris/Projects/gh_maven-index-exporter/repository_test/export/
 PASS: file [/home/boris/Projects/gh_maven-index-exporter/repository_test/export/_1.fld] has sprova4j-0.1.1-sources.jar.
 PASS: file [/home/boris/Projects/gh_maven-index-exporter/repository_test/export/_1.fld] has sprova4j-0.1.1.pom.
 $
-````
+```
 
 ## How to test (the long road)
 
 This repository has a simple, almost-empty maven-indexer index that can be used to test the docker build. To use it, make sure that the directory `repository_test/` is present and run this command:
 
-````
+```
 $ docker run -v $(pwd)/repository_test:/work bbaldassari/maven-index-exporter
-````
+```
 
 The exported files will be stored in `repository_test/export/`, and output should look like this:
 
-````
+```
 $ docker run -v $(pwd)/repository_test:/work bbaldassari/maven-index-exporter
 Docker Script started on 2021-08-27 06:32:22.
 # Checks..
@@ -257,11 +257,11 @@ Size before cleaning:
 4.0K	/work/nexus-maven-repository-index.properties.sha1
 * Make files modifiable by the end-user.
 Docker Script execution finished on 2021-08-27 06:32:23.
-````
+```
 
 The `_1.fld` file contains the fields for each document:
 
-````
+```
 $ head repository_test/export/_1.fld
 doc 0
   field 0
@@ -273,7 +273,7 @@ doc 0
     type string
     value 1626111735737
   field 2
-````
+```
 
 ### Building the test repository
 
@@ -281,7 +281,7 @@ The test repository `repository_test` can be rebuilt from the `repository_src`
 structure using [indexer-cli](https://search.maven.org/remotecontent?filepath=org/apache/maven/indexer/indexer-cli/6.0.0/indexer-cli-6.0.0.jar)
 with the following commands:
 
-````
+```
 $ cd repository_src
 $ java -jar ~/Downloads/indexer-cli-6.0.0.jar -i index/ -d repository_test/ -r repo1 -s -c
 SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
@@ -315,5 +315,21 @@ Artifacts added:   2
 Artifacts deleted: 0
 Total time:   0 sec
 Final memory: 7M/1012M
+$ java -jar ~/Downloads/indexer-cli-6.0.0.jar -i index/ -d repository_test/ -r repo3 -s -c
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+Repository Folder: /home/boris/Projects/maven-index-exporter/repository_src/repo3
+Index Folder:      /home/boris/Projects/maven-index-exporter/repository_src/index
+Output Folder:     /home/boris/Projects/maven-index-exporter/repository_src/repository_test
+Repository name:   index
+Indexers: [min, jarContent]
+Will create checksum files for all published files (sha1, md5).
+Will create incremental chunks for changes, along with baseline file.
+Scanning started
+Artifacts added:   1
+Artifacts deleted: 2
+Total time:   0 sec
+Final memory: 8M/1012M
 $
-````
+```
