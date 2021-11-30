@@ -20,7 +20,7 @@ OLD_DIR=$(pwd)
 REPO_DIR=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 cd $OLD_DIR
 
-WORK_DIR=$REPO_DIR/repository_test
+WORK_DIR=$REPO_DIR/tests/repository_test
 EXPORT_DIR=$WORK_DIR/export
 
 # First clean up and remove any docker image with our own name
