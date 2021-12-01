@@ -122,7 +122,7 @@ Please note that there will probably be a huge amount of artefact duplicates, as
 
 List of downloads:
 
-* The curated list of maven repositories (333 servers): [list_maven_servers_with_indexes.txt](maven_repositories/list_maven_servers_with_indexes.txt)
+* The curated list of maven repositories (333 servers): [list_maven_servers_with_index.txt](maven_repositories/list_maven_servers_with_index.txt)
 * A list of compressed text exports for the above maven repositories (as of 2021-11-28): https://icedrive.net/1/01BQpqC6rA
   We will add more downloads as they are generated, so stay tuned.
 
