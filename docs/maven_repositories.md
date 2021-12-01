@@ -1,4 +1,7 @@
+
+
 A list of remote Maven repositories using [Maven Indexer](https://maven.apache.org/maven-indexer/) for their catalogue.
+
 
 # Introduction
 
@@ -105,6 +108,7 @@ done
 
 This again filters out some servers that use a Maven Indexer version different from the Docker image's compatibility.
 
+
 # Result
 
 The final list contains only Maven repositories that:
@@ -114,6 +118,11 @@ The final list contains only Maven repositories that:
 * are still available as of 2021-11-20, and
 * can be extracted using the Maven index exporter Docker image.
 
+Please note that there will probably be a huge amount of artefact duplicates, as several server names can map to to the same repository, and some repositories might mirror existing content.
+
 List of downloads:
 
-* list_maven_servers_with_indexes.txt
+* The curated list of maven repositories (333 servers): [list_maven_servers_with_indexes.txt](maven_repositories/list_maven_servers_with_indexes.txt)
+* A list of compressed text exports for the above maven repositories (as of 2021-11-28): https://icedrive.net/1/01BQpqC6rA
+  We will add more downloads as they are generated, so stay tuned.
+

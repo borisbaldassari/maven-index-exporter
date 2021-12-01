@@ -12,4 +12,9 @@ It takes as input the full set of Maven indexes files, as can be seen in the cen
 
 An official Docker image is provided for quick tests on [DockerHub](https://hub.docker.com/r/bbaldassari/maven-index-exporter).
 
+## List of maven repositories
+
+We also provide a curated list of maven repositories that can be used with the Docker images, i.e. they use the Maven indexer, make their indexes publicly available, and use the same version as the exporter. 
+
+See [docs/maven_repositories.md](docs/maven_repositories.md).
 
