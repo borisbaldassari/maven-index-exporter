@@ -1,7 +1,7 @@
 # Copyright (C) 2021 The Software Heritage developers
-# See the AUTHORS file at the top-level directory of this distribution
 # License: GNU General Public License version 3, or any later version
 # See top-level LICENSE file for more information
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 import docker
 import requests
