@@ -59,7 +59,10 @@ The clue command is documented on [its github page](https://github.com/javasoze/
 The indexed Lucene documents are located in the `*.fld` file.
 
 A description of the fields used by maven-indexer can be found in the project's
-API docs: https://maven.apache.org/maven-indexer-archives/maven-indexer-6.0.0/indexer-core/apidocs/org/apache/maven/index/ArtifactInfo.html
+API docs: 
+* https://maven.apache.org/maven-indexer-archives/maven-indexer-6.0.0/indexer-core/apidocs/org/apache/maven/index/ArtifactInfo.html
+* https://maven.apache.org/maven-indexer-archives/maven-indexer-6.0.0/indexer-core/index.html
+
 
 ## How to build
 
